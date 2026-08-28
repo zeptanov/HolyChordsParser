@@ -16,7 +16,10 @@ def run_gui() -> None:
     app.geometry("520x430")
     app.resizable(False, False)
     app.configure(fg_color="#101820")
-    app.iconbitmap(Path(__file__).parent / "assets" / "icon.ico")
+    try:
+        app.iconbitmap(Path(__file__).parent / "assets" / "icon.ico")
+    except Exception:
+        pass
 
     header = ctk.CTkFrame(app, fg_color="transparent")
     header.pack(fill="x", padx=32, pady=(28, 6))
