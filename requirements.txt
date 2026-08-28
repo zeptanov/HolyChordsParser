@@ -1,0 +1,5 @@
+beautifulsoup4
+customtkinter
+httpx
+pydantic
+winotify
