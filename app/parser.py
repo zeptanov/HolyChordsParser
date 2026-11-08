@@ -6,6 +6,20 @@ from urllib.parse import urlparse
 
 BASE_URL = "https://holychords.pro"
 
+CHORD_LINE_PATTERN = re.compile(
+    r"^\s*"
+    r"(?:"
+    r"[A-GH](?:#|b)?"
+    r"(?:maj|min|m|dim|aug|sus|add)?"
+    r"(?:\d+)?"
+    r"(?:/[A-GH](?:#|b)?)?"
+    r"(?:\s+|$)"
+    r")+"
+    r"(?:[xх]\s*\d+)?"
+    r"\s*$",
+    re.IGNORECASE,
+)
+
 
 def normalize_song_id(song_id_or_url: str) -> str:
     value = song_id_or_url.strip()
@@ -98,19 +112,6 @@ class HolyChordsParser:
         # REGEX ДЛЯ АККОРДОВ
         # =========================================================
 
-        chord_pattern = re.compile(
-            r"^\s*"
-            r"(?:"
-            r"[A-GH](?:#|b)?"
-            r"(?:maj|min|m|dim|aug|sus|add)?"
-            r"(?:\d+)?"
-            r"(?:/[A-GH](?:#|b)?)?"
-            r"(?:\s+|$)"
-            r")+"
-            r"\s*$",
-            re.IGNORECASE,
-        )
-
         # =========================================================
         # REGEX ДЛЯ ЗАГОЛОВКОВ
         # =========================================================
@@ -146,7 +147,7 @@ class HolyChordsParser:
                 continue
 
             # Аккорды
-            if chord_pattern.match(line):
+            if CHORD_LINE_PATTERN.match(line):
                 continue
 
             # Заголовок секции
@@ -210,5 +211,4 @@ class HolyChordsParser:
             artist=artist,
             text=text,
         )
-
 
